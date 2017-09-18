@@ -1,0 +1,14 @@
+{
+  "name": "jpeg",
+  "version": "1.0.0",
+  "description": "Its a jpeg compression app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ameerthehacker",
+  "license": "ISC",
+  "dependencies": {
+    "get-pixels": "^3.3.0"
+  }
+}
