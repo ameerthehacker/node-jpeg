@@ -6,6 +6,6 @@ const jpeg = require('./jpeg');
 getPixels('./images/lena.png', 'image/png', (err, pixels) => {
   let width = pixels.shape[0];
   let height = pixels.shape[1];
-  console.log(jpeg(pixels.data, width, height));
+  console.log(jpeg(pixels.data, width, height)[0]);
   // jpeg(pixels.data, width, height);
 });
