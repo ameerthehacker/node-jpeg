@@ -1,3 +1,5 @@
+const rle = require('rle');
+
 function rgb2yiq(rgb) {
   yiq = [0, 0, 0]
   yiq[0] = (0.299 * rgb[0]) + (0.587 * rgb[1]) + (0.144 * rgb[2]);
@@ -92,14 +94,35 @@ function quantize(macroBlocks) {
   }
   return macroBlocks;
 }
-function compress(pixels, height, width) {
+function zigZagScan(macroBlocks) {
+  let array = [];
+  for(let i = 0; i < macroBlocks.length; i++) {
+    // ZigZag for right column
+    for(let j = 0; j < 7; j++) {
+      for(let k = 0; k <= j; k++) {
+        array.push(macroBlocks[i][j - k][k]);
+      }
+    }
+    // ZigZag for bottom row
+    for(let j = 0; j < 8; j++) {
+      for(let k = 7, l = 0; k >= j; k--, l++) {
+        array.push(macroBlocks[i][k][l]);
+      }
+    }
+  }
+  return array;
+}
+function encode(pixels, height, width) {
   // Prepare the macroblocks
   let macroBlocks = prepareBlocks(pixels, height, width);
   // Perform DCT on the macroblocks
   macroBlocks = DCT(macroBlocks);
   // Quantize the macroblock using the quantization matrix
   macroBlocks = quantize(macroBlocks);
+  // Perform zig zag scan
+  macroBlocks = zigZagScan(macroBlocks);
+
   return macroBlocks;
 }
 
-module.exports = compress;
+module.exports = encode;
