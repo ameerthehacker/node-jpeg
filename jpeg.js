@@ -54,7 +54,7 @@ function seperateBlocks(macroBlocks, height, width) {
     for(j = 0; j < macroBlocks.length; j++) {
       let macroBlockRow = macroBlocks[j].pop();
       for(k = 0; k < 8; k++) {
-        array.push(macroBlockRow.pop());
+        array.push(macroBlockRow.pop() + 128);
       }
     }
   }
